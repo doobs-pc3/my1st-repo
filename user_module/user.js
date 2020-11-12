@@ -48,4 +48,23 @@ router.post("/", (request, response) => {
   );
 });
 
+
+// PUT:
+router.put("/:userid", (request, response) => {
+  const { userid } = request.params;
+  connection.query(
+    `update user set user_email = '${request.body.email}' where user_id = ${request.params.userid}`,
+    (errors, results) => {
+      if (errors) {
+        console.log(errors);
+        response.status(400).send("server error.");
+      } 
+      else {
+        response.send(`The email of user bearing id ${request.params.userid} has been updated.`);
+      }
+    }
+  );
+});
+
+
 module.exports = router;
