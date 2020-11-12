@@ -32,4 +32,20 @@ router.get("/:userid", (request, response) => {
 });
 
 
+// POST:
+router.post("/", (request, response) => {
+  connection.query(
+    `insert into user(user_idcard, user_firstname, user_lastname, user_gender, user_dob, user_phone, user_email, user_address1, user_address2, user_postcode) values (${request.body.idcard}, '${request.body.firstname}', '${request.body.lastname}', '${request.body.gender}', '${request.body.dob}', '${request.body.phone}', '${request.body.email}', '${request.body.address1}', '${request.body.address2}', '${request.body.postcode}')`,
+    (errors, results, fields) => {
+      if (errors) {
+        console.log(errors);
+        response.status(400).send("server error.");
+      } 
+      else {
+        response.send(`User with the name ${request.body.firstname} added to the database.`);
+      }
+    }
+  );
+});
+
 module.exports = router;
