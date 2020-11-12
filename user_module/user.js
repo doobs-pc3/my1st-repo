@@ -67,4 +67,22 @@ router.put("/:userid", (request, response) => {
 });
 
 
+// DELETE:
+router.delete("/:userid", (request, response) => {
+  const { userid } = request.params;
+  connection.query(
+    `delete from user where user_id = ${request.params.userid}`,
+    (errors, results) => {
+      if (errors) {
+        console.log(errors);
+        response.status(400).send("server error.");
+      } 
+      else {
+        response.send(`User with id ${request.params.userid} deleted from database`);
+      }
+    }
+  );
+});
+
+
 module.exports = router;
